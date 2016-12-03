@@ -6,7 +6,7 @@
 #    By: gvillat <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/11/30 12:31:10 by gvillat           #+#    #+#              #
-#    Updated: 2016/06/06 16:56:24 by gvillat          ###   ########.fr        #
+#    Updated: 2016/12/03 19:53:53 by gvillat          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,11 +48,15 @@ $(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
 
 clean:
 	@rm -rf $(OBJ)
+	@cd ./lib/libft && $(MAKE) clean
+	@cd ./lib/libftprintf && $(MAKE) clean
 	@echo "\033[1;34mft_ls\t\033[1;33mCleaning obj\t\033[0;32m-OK-\033[0m"
 
 fclean: clean
 	@rm -rf ./obj $(NAME)
 	@rm -rf ./lib/libft/libft.a ./lib/libftprintf/libftprintf.a
+	@cd ./lib/libft && $(MAKE) fclean
+	@cd ./lib/libftprintf && $(MAKE) clean
 	@echo "\033[1;34mft_ls\t\033[1;33mCleaning lib\t\033[0;32m-OK-\033[0m"
 	# @cd ./libft && $(MAKE) fclean
 

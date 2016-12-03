@@ -22,6 +22,8 @@ int	sort_time(char *one, char *two, char *path)
 
 	lstat(pathone, &st1);
 	lstat(pathtwo, &st2);
+	ft_memdel((void*)&pathone);
+	ft_memdel((void*)&pathtwo);
 	return (st1.st_mtime < st2.st_mtime);
 }
 
@@ -37,6 +39,8 @@ int	sort_rtime(char *one, char *two, char *path)
 
 	lstat(pathone, &st1);
 	lstat(pathtwo, &st2);
+	ft_memdel((void*)&pathone);
+	ft_memdel((void*)&pathtwo);
 	return (st1.st_mtime > st2.st_mtime);
 }
 

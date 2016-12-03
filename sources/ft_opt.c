@@ -2,39 +2,43 @@
 
 LS *ft_add_args(LF **tmp, LS *ls)
 {
-	LF *chibre;
 	STAT st;
+	DIR *pdir;
+	char *str = NULL;
 
-	chibre = *tmp;
-	while (chibre)
+	while ((*tmp))
 	{
-		if (lstat(chibre->name, &st) == -1)
+		if (lstat((*tmp)->name, &st) == -1)
 	    {
-	    	if (!ft_strcmp(chibre->name, ""))
+	    	if (!ft_strcmp((*tmp)->name, ""))
 	    	{
 	    		perror("ls: fts_open");
 	      		exit (1);
 	    	}
 	    	else
-	     	   perror(ft_strjoin("ls: ", chibre->name));
+	    	{
+	    		str = ft_strjoin("ls: ", (*tmp)->name);
+	     		perror(str);
+	     		ft_memdel((void*)&str);
+	    	}
 	    }
-		else if ((S_ISDIR(st.st_mode) || (!opt_l && S_ISLNK(st.st_mode) && opendir(chibre->name))))
+		else if ((S_ISDIR(st.st_mode) || (!opt_l && S_ISLNK(st.st_mode) && (pdir = opendir((*tmp)->name)))))
 		{
-			if (opendir(chibre->name))
-				ft_add_begin_dir(chibre->name, &ls->dir);
+			if ((pdir = opendir((*tmp)->name)))
+				ft_add_begin_dir((*tmp)->name, &ls->dir);
 			else
 			{
 				ft_putstr_fd("ls: ", 2);
-				ft_putstr_fd(chibre->name, 2);
+				ft_putstr_fd((*tmp)->name, 2);
 				ft_putstr_fd(": Permission denied", 2);
 				ft_putchar_fd('\n', 2);
 			}
+  			closedir(pdir);
 		}
 		else
-			ft_add_end_file(chibre->name, &ls->file);			
-		chibre = chibre->next;
+			ft_add_end_file((*tmp)->name, &ls->file);			
+		(*tmp) = tool_lst_file_del((*tmp));
 	}
-	// ft_free(tmp);
 	return(ls);
 }
 

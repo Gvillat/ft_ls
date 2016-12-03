@@ -8,7 +8,7 @@ LD *ft_create_dir(char *name)
 		return (NULL);
 	new->next = NULL;
 	new->prev = NULL;
-	new->path = name;
+	new->path = fpf_strsub(name, 0, ft_strlen(name) + 1);
 	new->name = fpf_strsub(name, 0, ft_strlen(name) + 1);
 	new->file = NULL;
 	new->size = 0;
@@ -56,30 +56,30 @@ void ft_add_end_dir(char *name, LD **curr)
 	tmp->next->prev = tmp;
 }
 
-LD *ft_add_next_dir(char *name, LD **curr)
-{
-	LD *tmp;
+// LD *ft_add_next_dir(char *name, LD **curr)
+// {
+// 	LD *tmp;
 
-	if (!*curr)
-		(*curr = ft_create_dir(name));
-	if ((*curr)->next)
-	{
-		tmp = ft_create_dir(name);
-		tmp->path = ft_strjoin(tool_checkdirname((*curr)->path), tmp->name);
-		tmp->prev = *curr;
-		tmp->next = (*curr)->next;
-		(*curr)->next->prev = tmp;	
-		(*curr)->next = tmp;
-	}
-	else
-	{
-		tmp = *curr;
-		tmp->next = ft_create_dir(name);
-		tmp->next->path = ft_strjoin(tool_checkdirname((*curr)->path), tmp->next->path);
-		tmp->next->prev = tmp;
-	}
-	return(*curr);
-}
+// 	if (!*curr)
+// 		(*curr = ft_create_dir(name));
+// 	if ((*curr)->next)
+// 	{
+// 		tmp = ft_create_dir(name);
+// 		tmp->path = ft_strjoin(tool_checkdirname((*curr)->path), tmp->name);
+// 		tmp->prev = *curr;
+// 		tmp->next = (*curr)->next;
+// 		(*curr)->next->prev = tmp;	
+// 		(*curr)->next = tmp;
+// 	}
+// 	else
+// 	{
+// 		tmp = *curr;
+// 		tmp->next = ft_create_dir(name);
+// 		tmp->next->path = ft_strjoin(tool_checkdirname((*curr)->path), tmp->next->path);
+// 		tmp->next->prev = tmp;
+// 	}
+// 	return(*curr);
+// }
 
 LF *ft_add_end_file(char *name, LF **curr)
 {

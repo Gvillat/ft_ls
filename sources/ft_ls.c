@@ -23,7 +23,7 @@ void ft_get_info_size(LF *curr,char *dir_path)
 		ft_strlen(tmp->info->major) > g_major_max ? g_major_max = ft_strlen(tmp->info->major) : g_major_max;
 		ft_strlen(tmp->info->minor) > g_minor_max ? g_minor_max = ft_strlen(tmp->info->minor) : g_minor_max;
 		tmp = tmp->next;
-		free(path);
+		ft_memdel((void*)&path);
 	}
 }
 
@@ -76,6 +76,7 @@ void ft_start(LS *ls)
 		if (tmp)
 			ft_putchar('\n');
 	}
+	ft_memdel((void*)&ls->file);
 	// read une premiere fois le tout sans -R
 	// si -R relire la list et ajouter avec check_file a la suite 
 	while (tmp)
@@ -112,7 +113,8 @@ LD	*tool_lst_dir_del(LD *lst)
 	LD	*tmp;
 
 	tmp = lst->next;
-	// ft_memdel((void*)&lst->path);
+	ft_memdel((void*)&lst->path);
+	// ft_memdel((void*)&lst->file);
 	ft_memdel((void*)&lst->name);
 	ft_memdel((void*)&lst);
 	return (tmp);
@@ -130,7 +132,7 @@ void ft_end(LS *ls)
 	{
 			if ((ls->ac - ls->reste) > 1 || on)
 				fpf_printf("%s:\n", ls->dir->path);
-			if ((pdir = opendir(tool_checkdirname(ls->dir->path))))
+			if ((pdir = opendir(ls->dir->path)))
 			{
 				if (opt_l && ls->dir->file)
 				{
@@ -138,6 +140,7 @@ void ft_end(LS *ls)
 					ft_get_info_size(ls->dir->file, ls->dir->path);
 				}
 				ft_display(ls->dir->file, ls->dir->path);
+				ft_memdel((void*)&ls->dir->path);
   				closedir(pdir);
 			}
 			else
@@ -164,5 +167,6 @@ int main(int ac, char **av)
 	ls = ft_check_args(ac, av);
 	ft_start(ls);
 	ft_end(ls);
+	ft_memdel((void*)&ls);
 	return (g_ret);
 }

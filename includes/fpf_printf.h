@@ -14,7 +14,7 @@
 # define FT_PRINTF_H
 # define PF t_printf
 # define SPE t_spec
-# define BUFF_MAX 64
+# define BUFF_MAX 2048
 # define FD 1
 # include <stdarg.h>
 # include <unistd.h>

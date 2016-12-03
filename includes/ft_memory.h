@@ -129,6 +129,7 @@ void	ft_del_file();
 LF 		*ft_create_file(char *name);
 int ft_sort_args(LD **curr);
 void 	ft_print_file(LF *list);
+LF	*tool_lst_file_del(LF *lst);
 
 
 #endif

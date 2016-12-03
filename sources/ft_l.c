@@ -58,7 +58,6 @@ INFO *ft_fill_info(STAT *sb)
 	info->minor = ft_itoa((int)((char)sb->st_rdev));
 	info->guid = grp->gr_name;
 	info->size = sb->st_size;
-	info->mtime = ctime(&sb->st_mtime);
 	return (info);
 }
 
@@ -78,6 +77,16 @@ INFO *ft_fill_info(STAT *sb)
 // 	else
 // 		fpf_printf(" ");
 // }
+
+static void ft_free_info(INFO *info)
+{
+	// ft_memdel((void*)&info->uid);
+	// ft_memdel((void*)&info->guid);
+	ft_memdel((void*)&info->minor);
+	ft_memdel((void*)&info->major);
+	ft_memdel((void*)&info);
+
+}
 
 void ft_display_l(LF *tmp, STAT sb, char *path)
 {
@@ -101,5 +110,5 @@ void ft_display_l(LF *tmp, STAT sb, char *path)
 			ft_memdel((void*)&buf);
 	}
 	ft_putchar('\n');
-	free(tmp->info);
+	ft_free_info(tmp->info);
 }
