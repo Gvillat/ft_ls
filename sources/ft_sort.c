@@ -16,9 +16,12 @@ int	sort_time(char *one, char *two, char *path)
 	STAT st2;
 	char *pathone;
 	char *pathtwo;
+	char *temp;
 
-	pathone = ft_strjoin(tool_checkdirname(path), one);
-	pathtwo = ft_strjoin(tool_checkdirname(path), two);
+	temp = tool_checkdirname(path);
+	pathone = ft_strjoin(temp, one);
+	pathtwo = ft_strjoin(temp, two);
+	ft_memdel((void*)&temp);
 
 	lstat(pathone, &st1);
 	lstat(pathtwo, &st2);
@@ -33,9 +36,12 @@ int	sort_rtime(char *one, char *two, char *path)
 	STAT st2;
 	char *pathone;
 	char *pathtwo;
-
-	pathone = ft_strjoin(tool_checkdirname(path), one);
-	pathtwo = ft_strjoin(tool_checkdirname(path), two);
+	char *temp;
+	
+	temp = tool_checkdirname(path);
+	pathone = ft_strjoin(temp, one);
+	pathtwo = ft_strjoin(temp, two);
+	ft_memdel((void*)&temp);
 
 	lstat(pathone, &st1);
 	lstat(pathtwo, &st2);

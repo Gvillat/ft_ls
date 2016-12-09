@@ -82,7 +82,7 @@ static int			fpf_print_number_bis(PF *argument, int padding)
 	fpf_buff(argument->arg, argument);
 	if (argument->flags[4] == 1)
 		fpf_nputchar(' ', padding, argument);
-	if (fpf_strcmp(argument->arg, "0") != 0 && argument->flags[0] != 0)
+	// if (fpf_strcmp(argument->arg, "0") != 0 && argument->flags[0] != 0)
 		free(argument->arg);
 	return (0);
 }

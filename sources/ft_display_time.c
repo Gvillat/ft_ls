@@ -12,10 +12,10 @@ void		ft_get_time(time_t tm_file)
 	tm_diff = tm_now - tm_file;
 	str_ctime = ctime(&tm_file);
 	tmp = ft_strsplit(str_ctime, ' ');
-	if (tm_diff >= T_MONTH || tm_diff < -T_MONTH || tm_diff > tm_now)
-		fpf_printf("%-3s %2s  %-.*s ", tmp[1], tmp[2], ft_strlen(tmp[4]) - 1,tmp[4]);
-	else
-		fpf_printf("%-3s %2s %.5s ", tmp[1], tmp[2], tmp[3]);
+	// if (tm_diff >= T_MONTH || tm_diff < -T_MONTH || tm_diff > tm_now)
+		// fpf_printf("%-3s %2s  %-.*s ", tmp[1], tmp[2], ft_strlen(tmp[4]) - 1,tmp[4]);
+	// else
+		// fpf_printf("%-3s %2s %.5s ", tmp[1], tmp[2], tmp[3]);
 	while (tmp[i])
 	{
 		ft_memdel((void*)&tmp[i]);
@@ -38,12 +38,15 @@ LF *ft_display(LF *tmp, char *path)
 {
 	STAT sb;
 	char *path2;
+	char *temp;
 
 	while (tmp)
 	{
 			if (opt_l)
 			{
-				path2 = ft_strjoin(tool_checkdirname(path), tmp->name);
+				temp = tool_checkdirname(path);
+				path2 = ft_strjoin(temp, tmp->name);
+				ft_memdel((void**)&temp);
 				lstat(path2, &sb);
 				// tmp->info = ft_fill_info(&sb);
 				ft_display_l(tmp, sb, path2);
@@ -52,6 +55,7 @@ LF *ft_display(LF *tmp, char *path)
 			else
 				fpf_printf("%s\n", tmp->name);
 		tmp = tool_lst_file_del(tmp);
+		// tmp = tmp->next;m
 	}
 	return (tmp);
 }

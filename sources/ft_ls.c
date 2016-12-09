@@ -5,11 +5,14 @@ void ft_get_info_size(LF *curr,char *dir_path)
 	char *path;
 	LF *tmp;
 	STAT sb;
+	char *temp;
 
 	tmp = curr;
 	while (tmp)
 	{
-		path = ft_strjoin(tool_checkdirname(dir_path), tmp->name);
+		temp = tool_checkdirname(dir_path);
+		path = ft_strjoin(temp, tmp->name);
+		ft_memdel((void**)&temp);
 		if (lstat(path, &sb) == -1)
 	    {
 	        perror(tmp->name);
@@ -59,32 +62,8 @@ LS *ft_check_args(int ac, char **av)
 	if (ls->reste < ac)
 		ft_check_reste(ls);
 	if (ls->reste == ls->ac)
-		ft_add_begin_dir("./", &ls->dir);
+		ft_add_begin_dir(ft_strdup("."), &ls->dir);
 	return(ls);
-}
-
-void ft_start(LS *ls)
-{
-	LD *tmp;
-
-	tmp = ls->dir;
-	if (ls->file)
-	{
-		ft_get_info_size(ls->file, "./");
-		ft_display(ls->file, "./");
-		ft_clean_info_size();
-		if (tmp)
-			ft_putchar('\n');
-	}
-	ft_memdel((void*)&ls->file);
-	// read une premiere fois le tout sans -R
-	// si -R relire la list et ajouter avec check_file a la suite 
-	while (tmp)
-	{
-		ft_read(tmp);
-		tmp = tmp->next;
-		ft_sort_args(&tmp);
-	}
 }
 
 // static void ft_free(LS *ls)
@@ -113,8 +92,8 @@ LD	*tool_lst_dir_del(LD *lst)
 	LD	*tmp;
 
 	tmp = lst->next;
-	ft_memdel((void*)&lst->path);
-	// ft_memdel((void*)&lst->file);
+
+		ft_memdel((void**)&(lst->path));
 	ft_memdel((void*)&lst->name);
 	ft_memdel((void*)&lst);
 	return (tmp);
@@ -125,31 +104,49 @@ LD	*tool_lst_dir_del(LD *lst)
 
 void ft_end(LS *ls)
 {
-	int on = 0;
+	static int on = 0;
 	DIR *pdir;
 
+	if ((ls->ac - ls->reste) > 1 || on)
+		fpf_printf("%s:\n", ls->dir->path);
+	if ((pdir = opendir(ls->dir->path)))
+	{
+		if (opt_l && ls->dir->file)
+		{
+			// fpf_printf("total %d\n", ls->dir->size);
+			ft_putstr("total");
+			ft_putnbr(ls->dir->size);
+			ft_putstr(":\n");
+			ft_get_info_size(ls->dir->file, ls->dir->path);
+		}
+		ft_display(ls->dir->file, ls->dir->path);
+		closedir(pdir);
+	}
+	else
+		fpf_printf("ls: %s: Permission denied\n", ls->dir->name);
+	if (ls->dir->next)
+		ft_putchar('\n');
+	ls->dir = tool_lst_dir_del(ls->dir);
+	ft_clean_info_size();
+	on = 1;
+}
+
+void ft_start(LS *ls)
+{
+	if (ls->file)
+	{
+		ft_get_info_size(ls->file, ".");
+		ft_display(ls->file, ".");
+		ft_clean_info_size();
+		if (ls->dir)
+			ft_putchar('\n');
+	}
+	ft_memdel((void*)&ls->file);
 	while (ls->dir)
 	{
-			if ((ls->ac - ls->reste) > 1 || on)
-				fpf_printf("%s:\n", ls->dir->path);
-			if ((pdir = opendir(ls->dir->path)))
-			{
-				if (opt_l && ls->dir->file)
-				{
-					fpf_printf("total %d\n", ls->dir->size);
-					ft_get_info_size(ls->dir->file, ls->dir->path);
-				}
-				ft_display(ls->dir->file, ls->dir->path);
-				ft_memdel((void*)&ls->dir->path);
-  				closedir(pdir);
-			}
-			else
-				fpf_printf("ls: %s: Permission denied\n", ls->dir->name);
-			if (ls->dir->next)
-				ft_putchar('\n');
-		ls->dir = tool_lst_dir_del(ls->dir);
-		ft_clean_info_size();
-		on = 1;
+		ft_read(ls->dir);
+		ft_sort_args(&ls->dir->next);
+		ft_end(ls);
 	}
 }
 
@@ -166,7 +163,6 @@ int main(int ac, char **av)
 	g_major_max = 0;
 	ls = ft_check_args(ac, av);
 	ft_start(ls);
-	ft_end(ls);
 	ft_memdel((void*)&ls);
 	return (g_ret);
 }

@@ -2,17 +2,18 @@
 
 char		*tool_checkdirname(char *dir)
 {
-	if (dir == NULL)
+
+	if (!dir && !*dir)
 		return (dir);
-	if (dir[ft_strlen(dir) - 1] != '/')
-		return (ft_strjoin(dir, "/"));
+	if (dir[ft_strlen(dir)] != '/')
+		return(ft_strjoin(dir, "/"));
 	return (dir);
 }
 
 int tool_stats(char *path)
 {
 	STAT st;
-	static char *str = NULL;
+	char *str = NULL;
 
 	if (lstat(path, &st) == -1)
 	{
@@ -41,20 +42,22 @@ int ft_check_files(LD *curr)
 	STAT st;
 	int block;
 	char *str = NULL;
+	char *temp;
 
 	block = 0;
 	file = curr->file;
 	while (file)
 	{
-		curr->path = tool_checkdirname(curr->path);
-		str = ft_strjoin(curr->path, file->name);
+		temp = tool_checkdirname(curr->path);
+		str = ft_strjoin(temp, file->name);
+		free(temp);
 		lstat(str, &st);
+		ft_memdel((void*)&str);
 		if ((S_ISDIR(st.st_mode) && opt_R && (ft_strcmp(file->name, ".")) && (ft_strncmp(file->name, "..", 2))))
-	 		ft_add_end_dir(file->name, &curr);
+	 		ft_add_next_dir(file->name, &curr);
 	 	if (opt_l)
 	 		block += st.st_blocks;
 		file = file->next;
-		ft_memdel((void*)&str);
 	}
 	return (block);
 }

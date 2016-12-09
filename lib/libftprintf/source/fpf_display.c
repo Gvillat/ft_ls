@@ -31,7 +31,10 @@ void	*fpf_buff(char *str, PF *argument)
 	int i;
 
 	i = 0;
-	while (str[i] != '\0')
-		fpf_buf(str[i++], argument);
+	if (str)
+	{
+		while (str[i] != '\0')
+			fpf_buf(str[i++], argument);
+	}
 	return (NULL);
 }
