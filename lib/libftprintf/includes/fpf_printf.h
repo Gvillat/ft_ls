@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fpf_printf.h                                        :+:      :+:    :+:   */
+/*   fpf_printf.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvillat <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/27 17:36:12 by gvillat           #+#    #+#             */
-/*   Updated: 2016/09/27 17:36:13 by gvillat          ###   ########.fr       */
+/*   Created: 2016/12/15 05:41:21 by gvillat           #+#    #+#             */
+/*   Updated: 2016/12/15 05:41:22 by gvillat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_PRINTF_H
-# define FT_PRINTF_H
+#ifndef FPF_PRINTF_H
+# define FPF_PRINTF_H
 # define PF t_printf
 # define SPE t_spec
-# define BUFF_MAX 58
+# define BUFF_MAX 64
 # define FD 1
 # include <stdarg.h>
 # include <unistd.h>
@@ -84,7 +84,7 @@ int		fpf_wcharlen(wchar_t wchar);
 size_t	fpf_wbytelen(wchar_t *ws);
 void	*fpf_strlower(char *s);
 int		fpf_atoi(const char *nbr);
-char	*fpf_itoa_base(uintmax_t nbr, int base);
+char	*fpf_itoa_base(int value, int base);
 int		fpf_wchartostr(char *s, wchar_t wc);
 void	fpf_nputchar(char c, ssize_t n, PF *argument);
 size_t	fpf_strlen(const char *s);
@@ -99,6 +99,8 @@ int		fpf_strcmp(const char *s1, const char *s2);
 void	*fpf_memset(void *dest, int c, size_t n);
 int		fpf_isescaped(char c);
 int		fpf_isdigit(int c);
+char	*fpf_strdup(const char *s1);
+char	*fpf_strcpy(char *dst, const char *src);
 
 /*
 ** HANDLER

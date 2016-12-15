@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fpf_signed_conv.c                                   :+:      :+:    :+:   */
+/*   fpf_signed_conv.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvillat <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/09/27 17:35:51 by gvillat           #+#    #+#             */
-/*   Updated: 2016/09/27 17:35:53 by gvillat          ###   ########.fr       */
+/*   Created: 2016/12/15 05:42:46 by gvillat           #+#    #+#             */
+/*   Updated: 2016/12/15 05:42:48 by gvillat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,7 @@ static int			fpf_print_number_bis(PF *argument, int padding)
 	fpf_buff(argument->arg, argument);
 	if (argument->flags[4] == 1)
 		fpf_nputchar(' ', padding, argument);
-	// if (fpf_strcmp(argument->arg, "0") != 0 && argument->flags[0] != 0)
-		free(argument->arg);
+	free(argument->arg);
 	return (0);
 }
 

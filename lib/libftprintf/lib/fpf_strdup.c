@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   fpf_strdup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvillat <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/29 12:39:38 by gvillat           #+#    #+#             */
-/*   Updated: 2015/12/16 21:34:16 by gvillat          ###   ########.fr       */
+/*   Created: 2016/12/15 05:38:39 by gvillat           #+#    #+#             */
+/*   Updated: 2016/12/15 05:38:40 by gvillat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/fpf_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*fpf_strdup(const char *s1)
 {
-	char *str;
+	char	*cp;
 
-	str = ft_strnew(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!str)
+	cp = (char *)malloc(sizeof(char) * (fpf_strlen(s1) + 1));
+	if (!cp)
 		return (NULL);
-	ft_strcat(str, s1);
-	ft_strcat(str, s2);
-	return (str);
+	fpf_strcpy(cp, s1);
+	return (cp);
 }

@@ -22,6 +22,8 @@ LIBSRC = 	lib/fpf_isdigit.c \
 			lib/fpf_tolower.c \
 			lib/fpf_strcmp.c \
 			lib/fpf_wcharlen.c \
+			lib/fpf_strdup.c \
+			lib/fpf_strcpy.c \
 
 SRC =	source/fpf_printf.c \
 		source/fpf_display.c \

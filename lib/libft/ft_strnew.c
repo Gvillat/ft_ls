@@ -12,7 +12,7 @@
 
 #include <stdlib.h>
 #include <string.h>
-#include "../../includes/libft.h"
+#include "libft.h"
 
 char	*ft_strnew(size_t size)
 {

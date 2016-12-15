@@ -5,12 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: gvillat <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/11/24 17:31:44 by gvillat           #+#    #+#             */
-/*   Updated: 2015/12/16 22:24:56 by gvillat          ###   ########.fr       */
+/*   Created: 2016/12/15 05:34:16 by gvillat           #+#    #+#             */
+/*   Updated: 2016/12/15 05:34:18 by gvillat          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
+#include "libft.h"
 
 int	ft_atoi(const char *nbr)
 {

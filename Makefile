@@ -24,10 +24,12 @@ OBJ_PATH = ./obj
 SRC_NAME =	ft_ls.c\
 			ft_l.c\
 			ft_sort.c\
+			ft_sort2.c\
 			ft_memory.c\
 			ft_read.c\
 			ft_opt.c\
-			ft_display_time.c\
+			ft_tool.c\
+			ft_display.c\
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 
